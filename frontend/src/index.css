@@ -1,0 +1,82 @@
+@import "leaflet/dist/leaflet.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-brand-dark text-slate-100 font-sans antialiased overflow-x-hidden;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-brand-dark;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-border rounded;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-glow/50;
+  }
+}
+
+/* Leaflet Map Fixes for Dark Mode */
+.leaflet-container {
+  background-color: #0b0f19 !important;
+  font-family: inherit;
+}
+
+.dark-tile-map {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+/* Custom Neon Animations */
+@keyframes neonPulse {
+  0%, 100% {
+    text-shadow: 0 0 4px rgba(0, 216, 246, 0.4), 0 0 10px rgba(0, 216, 246, 0.2);
+    box-shadow: 0 0 8px rgba(0, 216, 246, 0.2), inset 0 0 8px rgba(0, 216, 246, 0.1);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(0, 216, 246, 0.8), 0 0 20px rgba(0, 216, 246, 0.4);
+    box-shadow: 0 0 15px rgba(0, 216, 246, 0.5), inset 0 0 12px rgba(0, 216, 246, 0.2);
+  }
+}
+
+.neon-glow {
+  animation: neonPulse 3s infinite alternate;
+}
+
+@keyframes dangerPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 74, 74, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255, 74, 74, 0.7);
+  }
+}
+
+.danger-pulse {
+  animation: dangerPulse 2s infinite alternate;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  @apply bg-brand-card/90 border border-brand-border backdrop-blur-md rounded-xl shadow-lg;
+}
+
+.glass-panel-glow {
+  @apply bg-brand-card/90 border border-brand-glow/30 backdrop-blur-md rounded-xl shadow-glow;
+}
+
+/* Custom Grid BG */
+.grid-bg {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(31, 46, 77, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(31, 46, 77, 0.15) 1px, transparent 1px);
+}

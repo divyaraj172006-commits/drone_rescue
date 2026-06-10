@@ -1,0 +1,204 @@
+import React, { useState } from 'react';
+import { useSimulation } from '../context/SimulationContext';
+import { FileText, Printer, Search, Download, Calendar, Activity } from 'lucide-react';
+
+export default function Reports() {
+  const { missions, disasters } = useSimulation();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const completedMissions = missions.filter(m => m.status === 'completed');
+  
+  const filteredMissions = completedMissions.filter(m => 
+    m.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (m.droneId?.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (m.disasterId?.title || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Formatter for print/PDF export
+  const exportPDF = () => {
+    const printWindow = window.open('', '_blank');
+    
+    const htmlContent = `
+      <html>
+        <head>
+          <title>RescueDrone EOC - Incident Report Summary</title>
+          <style>
+            body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; padding: 30px; }
+            .header { border-bottom: 2px solid #00D8F6; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+            .logo { font-size: 20px; font-weight: bold; color: #0f172a; }
+            .subtitle { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-top: 3px; }
+            .meta { font-size: 11px; text-align: right; color: #64748b; font-family: monospace; }
+            h2 { font-size: 18px; margin-bottom: 20px; color: #0f172a; border-left: 4px solid #00D8F6; padding-left: 10px; }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
+            th { background-color: #f1f5f9; padding: 10px; font-size: 11px; font-weight: bold; text-align: left; border-bottom: 1px solid #cbd5e1; text-transform: uppercase; color: #475569; }
+            td { padding: 12px 10px; font-size: 11px; border-bottom: 1px solid #e2e8f0; }
+            .badge { padding: 3px 6px; border-radius: 4px; font-size: 9px; font-weight: bold; text-transform: uppercase; }
+            .badge-success { background-color: #dcfce7; color: #166534; }
+            .badge-danger { background-color: #fee2e2; color: #991b1b; }
+            .footer { margin-top: 50px; border-top: 1px solid #e2e8f0; padding-top: 20px; font-size: 10px; color: #94a3b8; text-align: center; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div>
+              <div class="logo">RESCUEDRONE COMMAND REPORT</div>
+              <div class="subtitle">Emergency Operations Center GIS Analytics</div>
+            </div>
+            <div class="meta">
+              Report Generated: ${new Date().toLocaleString()}<br/>
+              Status: Telemetry Cleared
+            </div>
+          </div>
+
+          <h2>Completed UAV Missions (${filteredMissions.length})</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Mission Callsign</th>
+                <th>Dispatched UAV</th>
+                <th>Target Disaster Area</th>
+                <th>Priority</th>
+                <th>Survivors Assisted</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filteredMissions.map(m => `
+                <tr>
+                  <td style="font-weight: bold;">${m.title}</td>
+                  <td>${m.droneId?.name || 'Unknown'} (${m.droneId?.model || ''})</td>
+                  <td>${m.disasterId?.title || 'Unknown'}</td>
+                  <td><span class="badge ${m.priority === 'critical' || m.priority === 'high' ? 'badge-danger' : 'badge-success'}">${m.priority}</span></td>
+                  <td style="font-weight: bold; text-align: center;">${m.victimsFound}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+
+          <h2>Active Disaster Danger Zones</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Incident Name</th>
+                <th>Risk Type</th>
+                <th>Severity</th>
+                <th>Danger Radius</th>
+                <th>Coordinates</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${disasters.filter(d => d.status === 'active').map(d => `
+                <tr>
+                  <td style="font-weight: bold;">${d.title}</td>
+                  <td>${d.type.toUpperCase()}</td>
+                  <td><span class="badge ${d.severity === 'critical' || d.severity === 'high' ? 'badge-danger' : 'badge-success'}">${d.severity}</span></td>
+                  <td>${d.radius}m</td>
+                  <td>${d.location.lat.toFixed(4)}, ${d.location.lng.toFixed(4)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+
+          <div class="footer">
+            CONFIDENTIAL - Internal EOC Disaster Response Management System - Generated by Antigravity AI
+          </div>
+        </body>
+      </html>
+    `;
+
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout(() => {
+      printWindow.print();
+    }, 500);
+  };
+
+  return (
+    <div className="space-y-6">
+      
+      {/* 1. Header with PDF Export */}
+      <div className="flex items-center justify-between pb-3 border-b border-brand-border">
+        <div>
+          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300">System Logs & Reports</h3>
+          <p className="text-[10px] text-slate-500 mt-0.5">Sortie audit records and active disaster registry</p>
+        </div>
+        <button
+          onClick={exportPDF}
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-glow hover:bg-brand-glow/90 text-brand-dark font-bold text-xs rounded-lg shadow-glow transition-all"
+        >
+          <Printer size={14} />
+          <span>Export PDF Report</span>
+        </button>
+      </div>
+
+      {/* 2. Search Box */}
+      <div className="glass-panel p-4 flex items-center justify-between">
+        <div className="relative w-full max-w-sm">
+          <Search size={14} className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-500" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search completed missions..."
+            className="w-full pl-9 pr-3 py-2 bg-brand-dark border border-brand-border rounded-lg text-slate-200 text-xs focus:outline-none focus:border-brand-glow"
+          />
+        </div>
+        <span className="text-[10px] text-slate-400 font-mono">
+          {filteredMissions.length} Sorties archived
+        </span>
+      </div>
+
+      {/* 3. Completed Missions Table */}
+      <div className="glass-panel overflow-hidden border-brand-border/60">
+        <div className="p-4 bg-brand-border/20 border-b border-brand-border flex items-center gap-2">
+          <FileText size={16} className="text-brand-glow" />
+          <h4 className="text-xs font-bold uppercase tracking-widest text-slate-300">Completed Sorties Archive</h4>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs text-left">
+            <thead className="bg-brand-dark/50 text-[10px] text-slate-500 uppercase tracking-widest font-mono border-b border-brand-border">
+              <tr>
+                <th className="p-4">Sortie Name</th>
+                <th className="p-4">Assigned Drone</th>
+                <th className="p-4">Disaster Incident</th>
+                <th className="p-4">Priority</th>
+                <th className="p-4 text-center">Survivors Rescued</th>
+                <th className="p-4">Completed Date</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-brand-border/40 font-mono">
+              {filteredMissions.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="p-8 text-center text-slate-500">
+                    No completed rescue sorties registered.
+                  </td>
+                </tr>
+              ) : (
+                filteredMissions.map((m) => (
+                  <tr key={m._id} className="hover:bg-slate-900/30 text-slate-300 transition-colors">
+                    <td className="p-4 font-bold text-slate-200">{m.title}</td>
+                    <td className="p-4">{m.droneId?.name || 'Unknown'} ({m.droneId?.model || ''})</td>
+                    <td className="p-4">{m.disasterId?.title || 'Unknown'}</td>
+                    <td className="p-4">
+                      <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold uppercase
+                        ${m.priority === 'critical' || m.priority === 'high' ? 'bg-brand-danger/10 text-brand-danger' : 'bg-brand-success/10 text-brand-success'}
+                      `}>
+                        {m.priority}
+                      </span>
+                    </td>
+                    <td className="p-4 text-center font-bold text-brand-success">{m.victimsFound}</td>
+                    <td className="p-4 text-[10px] text-slate-500">
+                      {new Date(m.createdAt).toLocaleDateString()} {new Date(m.createdAt).toLocaleTimeString()}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  );
+}
