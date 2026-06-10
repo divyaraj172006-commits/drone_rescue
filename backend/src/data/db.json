@@ -3,14 +3,14 @@
     {
       "_id": "u1",
       "username": "admin",
-      "password": "$2a$10$WLunibRoK7EgCVpbvwGNHOYuKkXjHGaX89qcfTh8mCwKOX2yrq.am",
+      "password": "$2a$10$5DzGZmW5BmjqUC/mejszyO/lqm603qaBPMImWgDo45UBPsKJT2ro6",
       "role": "admin",
       "name": "EOC Director (Admin)"
     },
     {
       "_id": "u2",
       "username": "operator",
-      "password": "$2a$10$WLunibRoK7EgCVpbvwGNHOke/lgtxQC9dz/RV5.V8gpFTfsOq.A86",
+      "password": "$2a$10$5DzGZmW5BmjqUC/mejszyO.DOSxlhKCXeFMvp3uYRm2boYw0n6zgq",
       "role": "operator",
       "name": "UAV Operator"
     }
@@ -71,8 +71,8 @@
       "_id": "d4",
       "name": "AquaDrone-4",
       "model": "Waterproof Amphibious UAV",
-      "status": "charging",
-      "battery": 68,
+      "status": "idle",
+      "battery": 100,
       "speed": 10,
       "payloadCapacity": 8,
       "currentLocation": {
@@ -96,7 +96,7 @@
         "lng": 77.671
       },
       "radius": 1000,
-      "reportedAt": "2026-06-10T10:41:09.912Z",
+      "reportedAt": "2026-06-10T13:05:20.158Z",
       "status": "active",
       "metrics": {
         "rainfall": 120,
@@ -115,7 +115,7 @@
         "lng": 77.51
       },
       "radius": 1500,
-      "reportedAt": "2026-06-10T01:41:09.914Z",
+      "reportedAt": "2026-06-10T04:05:20.158Z",
       "status": "active",
       "metrics": {
         "rainfall": 0,
@@ -134,7 +134,7 @@
         "lng": 76.6551
       },
       "radius": 600,
-      "reportedAt": "2026-06-10T12:41:09.914Z",
+      "reportedAt": "2026-06-10T15:05:20.158Z",
       "status": "active",
       "metrics": {
         "rainfall": 10,
@@ -144,8 +144,8 @@
       }
     },
     {
-      "_id": "mq84jd60gi4d3",
-      "reportedAt": "2026-06-10T13:48:22.248Z",
+      "_id": "mq89fo16k6hvr",
+      "reportedAt": "2026-06-10T16:05:27.786Z",
       "status": "active",
       "title": "Mysore Palace Flood Emergency",
       "type": "flood",
@@ -194,18 +194,18 @@
         "medicalSupplies": 212,
         "shelters": 1
       },
-      "createdAt": "2026-06-10T11:11:09.914Z"
+      "createdAt": "2026-06-10T13:35:20.158Z"
     },
     {
-      "_id": "mq84dwbd9wjsv",
-      "createdAt": "2026-06-10T13:44:07.131Z",
+      "_id": "mq89fo1v32ftt",
+      "createdAt": "2026-06-10T16:05:27.811Z",
       "status": "completed",
       "progress": 100,
-      "victimsFound": 0,
-      "title": "Sortie-Falcon-1: Mysuru Heritage Palace Collapse",
+      "victimsFound": 150,
+      "title": "Sortie-Falcon-1: Mysore Palace flood recovery",
       "droneId": "d1",
-      "disasterId": "dis3",
-      "priority": "medium",
+      "disasterId": "mq89fo16k6hvr",
+      "priority": "high",
       "route": [
         {
           "lat": 12.9716,
@@ -214,142 +214,6 @@
         {
           "lat": 12.953125,
           "lng": 77.57125
-        },
-        {
-          "lat": 12.926875,
-          "lng": 77.53875000000001
-        },
-        {
-          "lat": 12.900625,
-          "lng": 77.50625
-        },
-        {
-          "lat": 12.874375,
-          "lng": 77.47375
-        },
-        {
-          "lat": 12.848125,
-          "lng": 77.44125
-        },
-        {
-          "lat": 12.821875,
-          "lng": 77.40875
-        },
-        {
-          "lat": 12.795625,
-          "lng": 77.37625
-        },
-        {
-          "lat": 12.769375,
-          "lng": 77.34375
-        },
-        {
-          "lat": 12.743125000000001,
-          "lng": 77.31125
-        },
-        {
-          "lat": 12.716875,
-          "lng": 77.27875
-        },
-        {
-          "lat": 12.690625,
-          "lng": 77.24625
-        },
-        {
-          "lat": 12.664375,
-          "lng": 77.21375
-        },
-        {
-          "lat": 12.638125,
-          "lng": 77.18125
-        },
-        {
-          "lat": 12.611875,
-          "lng": 77.14875
-        },
-        {
-          "lat": 12.585625,
-          "lng": 77.11625000000001
-        },
-        {
-          "lat": 12.559375,
-          "lng": 77.08375
-        },
-        {
-          "lat": 12.533125,
-          "lng": 77.05125
-        },
-        {
-          "lat": 12.506874999999999,
-          "lng": 77.01875
-        },
-        {
-          "lat": 12.480625,
-          "lng": 76.98625
-        },
-        {
-          "lat": 12.454375,
-          "lng": 76.95375
-        },
-        {
-          "lat": 12.428125,
-          "lng": 76.92125
-        },
-        {
-          "lat": 12.401875,
-          "lng": 76.88875
-        },
-        {
-          "lat": 12.375625,
-          "lng": 76.85625
-        },
-        {
-          "lat": 12.349375,
-          "lng": 76.82375
-        },
-        {
-          "lat": 12.323125,
-          "lng": 76.79125
-        },
-        {
-          "lat": 12.296875,
-          "lng": 76.75875
-        },
-        {
-          "lat": 12.296875,
-          "lng": 76.72625000000001
-        },
-        {
-          "lat": 12.296875,
-          "lng": 76.69375000000001
-        },
-        {
-          "lat": 12.3052,
-          "lng": 76.6551
-        }
-      ],
-      "allocatedResources": {
-        "ambulances": 10,
-        "rescueTeams": 8,
-        "foodKits": 500,
-        "medicalSupplies": 500,
-        "shelters": 3
-      }
-    },
-    {
-      "_id": "mq84jd6kkpwo0",
-      "createdAt": "2026-06-10T13:48:22.268Z",
-      "status": "completed",
-      "progress": 100,
-      "victimsFound": 150,
-      "title": "Sortie-AquaDrone-4: Mysore Palace flood recovery",
-      "droneId": "d4",
-      "disasterId": "mq84jd60gi4d3",
-      "priority": "high",
-      "route": [
-        {
-          "lat": 12.9625,
-          "lng": 77.5732
         },
         {
           "lat": 12.926875,
@@ -475,28 +339,28 @@
   ],
   "alerts": [
     {
-      "_id": "mq84ligd0pqyn",
-      "timestamp": "2026-06-10T13:50:02.413Z",
-      "message": "MISSION SUCCESS: \"Sortie-AquaDrone-4: Mysore Palace flood recovery\" completed. Drone AquaDrone-4 returned to base with 66% battery. 150 victims assisted.",
+      "_id": "mq89ht97jnrh3",
+      "timestamp": "2026-06-10T16:07:07.867Z",
+      "message": "MISSION SUCCESS: \"Sortie-Falcon-1: Mysore Palace flood recovery\" completed. Drone Falcon-1 returned to base with 66% battery. 150 victims assisted.",
       "type": "info",
       "location": {
-        "lat": 12.9625,
-        "lng": 77.5732
+        "lat": 12.9716,
+        "lng": 77.5946
       }
     },
     {
-      "_id": "mq84jd6nrcvp9",
-      "timestamp": "2026-06-10T13:48:22.271Z",
-      "message": "Mission Launched: Drone AquaDrone-4 is en route to Mysore Palace Flood Emergency with resource payload.",
+      "_id": "mq89fo1xpljil",
+      "timestamp": "2026-06-10T16:05:27.813Z",
+      "message": "Mission Launched: Drone Falcon-1 is en route to Mysore Palace Flood Emergency with resource payload.",
       "type": "info",
       "location": {
-        "lat": 12.9625,
-        "lng": 77.5732
+        "lat": 12.9716,
+        "lng": 77.5946
       }
     },
     {
-      "_id": "mq84jd62ei0ka",
-      "timestamp": "2026-06-10T13:48:22.250Z",
+      "_id": "mq89fo19fgbe0",
+      "timestamp": "2026-06-10T16:05:27.789Z",
       "message": "HIGH Emergency: FLOOD - Mysore Palace Flood Emergency reported. Please avoid the area within 1000m radius.",
       "type": "evacuation",
       "location": {
@@ -505,23 +369,13 @@
       }
     },
     {
-      "_id": "mq84g15k5immo",
-      "timestamp": "2026-06-10T13:45:46.712Z",
-      "message": "MISSION SUCCESS: \"Sortie-Falcon-1: Mysuru Heritage Palace Collapse\" completed. Drone Falcon-1 returned to base with 66% battery. 0 victims assisted.",
+      "_id": "mq89fi5dtrfs0",
+      "timestamp": "2026-06-10T16:05:20.161Z",
+      "message": "System database has been reset to default emergency response seeds.",
       "type": "info",
       "location": {
-        "lat": 12.9716,
-        "lng": 77.5946
-      }
-    },
-    {
-      "_id": "mq84dwc6zvzmy",
-      "timestamp": "2026-06-10T13:44:07.158Z",
-      "message": "Mission Launched: Drone Falcon-1 is en route to Mysuru Heritage Palace Collapse with resource payload.",
-      "type": "info",
-      "location": {
-        "lat": 12.9716,
-        "lng": 77.5946
+        "lat": 12.6,
+        "lng": 77.1
       }
     },
     {
@@ -532,7 +386,7 @@
         "lat": 12.3052,
         "lng": 76.6551
       },
-      "timestamp": "2026-06-10T12:41:09.914Z"
+      "timestamp": "2026-06-10T15:05:20.158Z"
     },
     {
       "_id": "a2",
@@ -542,7 +396,7 @@
         "lat": 12.934,
         "lng": 77.671
       },
-      "timestamp": "2026-06-10T10:41:09.914Z"
+      "timestamp": "2026-06-10T13:05:20.158Z"
     },
     {
       "_id": "a3",
@@ -552,7 +406,7 @@
         "lat": 12.86,
         "lng": 77.51
       },
-      "timestamp": "2026-06-10T01:41:09.914Z"
+      "timestamp": "2026-06-10T04:05:20.158Z"
     }
   ]
 }

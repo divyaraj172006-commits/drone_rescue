@@ -17,7 +17,7 @@ const MOCK_PRESETS = [
   {
     id: 'wildfire',
     name: 'Everglades Forest (Overhead)',
-    url: 'https://images.unsplash.com/photo-1508873696983-2df519f0397e?auto=format&fit=crop&w=600&q=80',
+    url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=80',
     victims: [
       { x: 280, y: 150, w: 60, h: 60, label: 'Heat Signature (Person)', conf: '88.4%' }
     ]
