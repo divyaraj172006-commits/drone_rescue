@@ -3,6 +3,7 @@ import { adminAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useSimulation } from '../context/SimulationContext';
 import { Settings as SettingsIcon, Sun, Moon, Gauge, RefreshCw, ShieldAlert, CheckCircle } from 'lucide-react';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 export default function Settings() {
   const { isAdmin } = useAuth();
@@ -17,6 +18,7 @@ export default function Settings() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
 
   // Fetch current simulation speed on mount
   useEffect(() => {
@@ -62,8 +64,7 @@ export default function Settings() {
   };
 
   const handleResetDb = async () => {
-    if (!window.confirm('WARNING: This will wipe all current flight sorties and active disaster changes, and restore the EOC to its default bootstrap state. Proceed?')) return;
-    
+    setIsResetConfirmOpen(false);
     setLoading(true);
     setError('');
     setSuccess('');
@@ -174,7 +175,7 @@ export default function Settings() {
         </p>
 
         <button
-          onClick={handleResetDb}
+          onClick={() => setIsResetConfirmOpen(true)}
           disabled={loading || !isAdmin}
           className="flex items-center gap-1.5 px-4 py-2.5 bg-brand-danger hover:bg-brand-danger/90 disabled:bg-slate-800 disabled:text-slate-500 disabled:border-transparent text-white font-bold text-xs rounded-lg transition-all"
         >
@@ -182,6 +183,17 @@ export default function Settings() {
           <span>Wipe System & Seed Telemetry</span>
         </button>
       </div>
+
+      <ConfirmationModal
+        isOpen={isResetConfirmOpen}
+        title="Wipe & Reset Database"
+        message="WARNING: This will wipe all current flight sorties and active disaster changes, and restore the EOC to its default bootstrap state. Proceed?"
+        confirmText="Reset Database"
+        cancelText="Cancel"
+        onConfirm={handleResetDb}
+        onCancel={() => setIsResetConfirmOpen(false)}
+        isDanger={true}
+      />
 
     </div>
   );

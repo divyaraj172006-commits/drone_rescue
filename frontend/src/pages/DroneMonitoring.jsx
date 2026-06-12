@@ -3,6 +3,7 @@ import { useSimulation } from '../context/SimulationContext';
 import { useAuth } from '../context/AuthContext';
 import { droneAPI } from '../services/api';
 import { Radio, Battery, Gauge, Hammer, Trash2, Plus, AlertTriangle, Eye } from 'lucide-react';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 export default function DroneMonitoring() {
   const { drones, refresh } = useSimulation();
@@ -20,6 +21,10 @@ export default function DroneMonitoring() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Decommission modal states
+  const [deleteTargetId, setDeleteTargetId] = useState(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const handleAddDrone = async (e) => {
     e.preventDefault();
@@ -48,15 +53,24 @@ export default function DroneMonitoring() {
     }
   };
 
-  const handleDeleteDrone = async (id) => {
-    if (!window.confirm('Are you sure you want to decommission this UAV?')) return;
+  const triggerDeleteConfirm = (id) => {
+    setDeleteTargetId(id);
+    setIsConfirmOpen(true);
+  };
+
+  const executeDeleteDrone = async () => {
+    setIsConfirmOpen(false);
+    if (!deleteTargetId) return;
     try {
-      await droneAPI.delete(id);
+      await droneAPI.delete(deleteTargetId);
       refresh();
     } catch (err) {
       alert('Failed to decommission drone.');
+    } finally {
+      setDeleteTargetId(null);
     }
   };
+
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -256,7 +270,7 @@ export default function DroneMonitoring() {
               {isAdmin && (
                 <div className="pt-3 border-t border-brand-border flex justify-end">
                   <button
-                    onClick={() => handleDeleteDrone(drone._id)}
+                    onClick={() => triggerDeleteConfirm(drone._id)}
                     className="p-1.5 hover:bg-brand-danger/10 text-slate-500 hover:text-brand-danger border border-transparent hover:border-brand-danger/30 rounded transition-all duration-200"
                     title="Decommission UAV"
                   >
@@ -269,6 +283,20 @@ export default function DroneMonitoring() {
           );
         })}
       </div>
+
+      <ConfirmationModal
+        isOpen={isConfirmOpen}
+        title="Decommission UAV"
+        message="Are you sure you want to decommission this UAV? This action will permanently remove it from EOC telemetry monitoring."
+        confirmText="Decommission"
+        cancelText="Cancel"
+        onConfirm={executeDeleteDrone}
+        onCancel={() => {
+          setIsConfirmOpen(false);
+          setDeleteTargetId(null);
+        }}
+        isDanger={true}
+      />
 
     </div>
   );
